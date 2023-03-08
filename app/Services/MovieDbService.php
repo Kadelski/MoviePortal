@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\Http;
 
 class MovieDbService
 {
-    public function call():array
+    public function call(string $path = "movie/upcoming"):array
     {
-        $response =  Http::get('https://api.themoviedb.org/3/movie/upcoming?',['api_key'=>'824ea24e0352f1f8e59cd60998d8a644']);
+        $url = "https://api.themoviedb.org/3/".$path;
+        $response =  Http::get($url.'?',['api_key'=>'824ea24e0352f1f8e59cd60998d8a644']);
 
         return json_decode($response->body(),true);
     }

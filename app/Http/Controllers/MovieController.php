@@ -7,6 +7,8 @@ use App\Models\Movie;
 use App\Http\Requests\StoreMovieRequest;
 use App\Http\Requests\UpdateMovieRequest;
 use App\Services\MovieDbService;
+use Illuminate\Http\Request;
+
 
 class MovieController extends Controller
 {
@@ -16,6 +18,7 @@ class MovieController extends Controller
     public function index()
     {
         $movieService = new MovieDbService();
+
         return Response(view('main',['movies' => $movieService->call()["results"]]));
     }
 
@@ -38,9 +41,11 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Movie $movie)
+    public function show(Request $request)
     {
-        //
+        $movieService = new MovieDbService();
+
+        return Response(view('movie',['movies' => $movieService->call("movie/".$request->id)]));
     }
 
     /**
